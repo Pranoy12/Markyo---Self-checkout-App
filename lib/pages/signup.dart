@@ -1,111 +1,129 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:login_markyo_app/services/auth_service.dart';
 
-class signup extends StatefulWidget {
-  const signup({Key? key}) : super(key: key);
+class MyRegister extends StatefulWidget {
+  const MyRegister({Key? key}) : super(key: key);
 
   @override
-  State<signup> createState() => _signupState();
+  State<MyRegister> createState() => _MyRegisterState();
 }
 
-class _signupState extends State<signup> {
+class _MyRegisterState extends State<MyRegister> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final AuthService authService = AuthService();
 
-  final _textController1 = TextEditingController();
-  final _textController2 = TextEditingController();
-
-  String firstName = '';
-  String secondName = '';
+  void signUpUser() {
+    authService.signUpUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Markyo',
-        style: TextStyle(
-          fontSize: 20.0,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2.0,
-        ),
-      ),
-        backgroundColor: Color.fromARGB(255, 158, 1, 185),
-        centerTitle: true,
-      ),
-      body: Center(
-          child: Container(
-            margin: EdgeInsets.only(top: 0),
-            padding: EdgeInsets.only(left: 35,right: 35),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Sign Up' ,
-                style: TextStyle(
-                  fontSize: 20.0
+    return Container(
+      // decoration: BoxDecoration(
+      //     image: DecorationImage(
+      //         image: AssetImage('assets/download.jpg'), fit: BoxFit.cover)),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 35, top: 130),
+              child: Text(
+                'Create \nAccount',
+                style: TextStyle(color: Colors.white, fontSize: 33),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.34,
+                    right: 35,
+                    left: 35),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          hintText: 'Username',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          hintText: 'Create Password',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          hintText: 'Email ID',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // TextField(
+                    //   decoration: InputDecoration(
+                    //       fillColor: Colors.grey.shade100,
+                    //       filled: true,
+                    //       hintText: 'Phone Number',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(10))),
+                    // ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // TextField(
+                    //   decoration: InputDecoration(
+                    //       fillColor: Colors.grey.shade100,
+                    //       filled: true,
+                    //       hintText: 'Referral Code',
+                    //       border: OutlineInputBorder(
+                    //           borderRadius: BorderRadius.circular(10))),
+                    // ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              signUpUser();
+                              print("Success");
+                            },
+                            child: const Text('Sign Up'))
+                      ],
+                    )
+                  ],
                 ),
               ),
-                Container(
-                  padding: EdgeInsets.only(top: 20.0,bottom: 20.0),
-                  child: TextField(
-                    controller: _textController1,
-                    decoration: InputDecoration(
-                      hintText: 'Username'
-                    ),
-                  ),
-                ),
-                TextField(
-                  controller: _textController2,
-                  decoration: InputDecoration(
-                    hintText: 'Password'
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 20.0,bottom: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'email'
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 0,bottom: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'phone Number'
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 40.0),
-                  child: RaisedButton(
-                    onPressed: () {
-                      setState(() {
-                        firstName = _textController1.text;
-                        secondName = _textController2.text;
-                        Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                          return Home();
-                          }),);
-                      });
-                    },
-                    child: Text('Sign Up'),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ), 
-      floatingActionButton: FloatingActionButton(
-        child: Text('clear'),
-        onPressed: () {
-          setState(() {
-            firstName = '';
-            secondName = '';
-
-             /* Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-              return Home();
-            }),); */ 
-          });
-        },
-        backgroundColor: Color.fromARGB(255, 158, 1, 185),
+            )
+          ],
+        ),
       ),
-      );
+    );
   }
 }

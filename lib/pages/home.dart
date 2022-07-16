@@ -9,32 +9,31 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   List<Product> l1 = [];
 
-    final _textController = TextEditingController();
+  final _textController = TextEditingController();
 
-    void itemRem() {
-      setState(() {
-        l1.removeLast();
-      });
-    }
-  
+  void itemRem() {
+    setState(() {
+      l1.removeLast();
+    });
+  }
+
   Widget eachProd(produ) {
     return Container(
       child: Card(
-            child: ListTile(
-              leading: FlutterLogo(size: 56.0),
-              title: Text('${produ.name}'),
-              subtitle: Text('Rs.10'),
-              trailing: IconButton(
-          icon: const Icon(Icons.delete),
-          onPressed: () {
-            itemRem();
-          },
-        ),
-            ),
+        child: ListTile(
+          leading: FlutterLogo(size: 56.0),
+          title: Text('${produ.name}'),
+          subtitle: Text('Rs.10'),
+          trailing: IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              itemRem();
+            },
           ),
+        ),
+      ),
     );
   }
 
@@ -43,18 +42,16 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 158, 1, 185),
-        title: Text('Markyo',
-        style: TextStyle(
-          letterSpacing: 2.0,
-          fontWeight: FontWeight.bold
-        ),
+        title: Text(
+          'Markyo',
+          style: TextStyle(letterSpacing: 2.0, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: Container(
-        child: Column(
-          children: [
-            Padding(
+          child: Column(
+        children: [
+          Padding(
             padding: EdgeInsets.all(20),
             child: TextField(
               controller: _textController,
@@ -64,16 +61,15 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-            Expanded(
-              child: ListView(
-                children: l1.map((e) {
-                  return eachProd(e);
-                }).toList(),
-              ),
+          Expanded(
+            child: ListView(
+              children: l1.map((e) {
+                return eachProd(e);
+              }).toList(),
             ),
-          ],
-        )
-      ),
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
@@ -82,10 +78,9 @@ class _HomeState extends State<Home> {
           });
         },
         backgroundColor: Colors.purple,
-        child: Text("+",
-        style: TextStyle(
-          fontSize: 30.0
-        ),
+        child: Text(
+          "+",
+          style: TextStyle(fontSize: 30.0),
         ),
       ),
     );
